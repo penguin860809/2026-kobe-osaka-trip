@@ -1,0 +1,457 @@
+{
+  "name": "2026 神戶・大阪旅行",
+  "subtitle": "活動紀事版｜地點、住宿、營業時間與注意事項併入每日行程",
+  "dateRange": "2026/9/24–9/30",
+  "sourceSheet": "0512",
+  "days": [
+    {
+      "day": 1,
+      "date": "2026-09-24",
+      "dateLabel": "9/24",
+      "weekday": "四",
+      "title": "神戶",
+      "area": "關西機場／神戶三宮",
+      "summary": "關西機場-神戶三宮-雞soba拉麵",
+      "lodging": "神戶 Brenza hotel",
+      "hours": "台北14:20-大阪18:05 CI172\n雞soba 1030-2200\nAeon超市0930-2130",
+      "notes": [
+        "利木津巴士 第1航廈1F機場專線巴士6號乘車處 前往神戶三宮・六甲島￥2200/人 上車刷Apple pay 信用卡",
+        "神戶高速船 第1航廈1F接駁巴士12號乘車(5分)→碼頭→高速船(30分)→神戶機場→→接駁巴士(3分)→Port Liner到三宮站(18分) 外國人高速船￥500 售票處出示護照"
+      ],
+      "events": [
+        {
+          "time": "14:20",
+          "title": "華航 CI172 台北出發",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%A1%83%E5%9C%92%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4%20%E7%AC%AC%E4%BA%8C%E8%88%AA%E5%BB%88"
+        },
+        {
+          "time": "18:05",
+          "title": "抵達關西機場",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%97%9C%E8%A5%BF%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4%20%E7%AC%AC1%E8%88%AA%E5%BB%88"
+        },
+        {
+          "time": "晚間",
+          "title": "前往神戶三宮",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B6%E4%B8%89%E5%AE%AE%E7%AB%99"
+        },
+        {
+          "time": "晚餐",
+          "title": "雞 Soba 拉麵",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%B6%8Fsoba%20%E7%A5%9E%E6%88%B6%20%E4%B8%89%E5%AE%AE"
+        },
+        {
+          "time": "入住",
+          "title": "Brenza Hotel",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=BRENZA%20HOTEL%20%E7%A5%9E%E6%88%B6"
+        }
+      ],
+      "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=%E9%97%9C%E8%A5%BF%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4%20%E7%AC%AC1%E8%88%AA%E5%BB%88&destination=BRENZA%20HOTEL%20%E7%A5%9E%E6%88%B6&travelmode=transit&waypoints=%E7%A5%9E%E6%88%B6%E4%B8%89%E5%AE%AE%E7%AB%99%7C%E9%B6%8Fsoba%20%E7%A5%9E%E6%88%B6%20%E4%B8%89%E5%AE%AE",
+      "weather": [
+        {
+          "label": "神戶市中央區",
+          "url": "https://tenki.jp/lite/forecast/6/31/6310/28110/"
+        }
+      ],
+      "notesRaw": "利木津巴士 第1航廈1F機場專線巴士6號乘車處 前往神戶三宮・六甲島￥2200/人 上車刷Apple pay 信用卡\n神戶高速船 第1航廈1F接駁巴士12號乘車(5分)→碼頭→高速船(30分)→神戶機場→→接駁巴士(3分)→Port Liner到三宮站(18分) 外國人高速船￥500 售票處出示護照",
+      "weatherDisplay": {
+        "condition": "多雲時晴",
+        "averageTemp": "26°C"
+      },
+      "weatherApi": {
+        "latitude": 34.6901,
+        "longitude": 135.1955,
+        "timezone": "Asia/Tokyo"
+      }
+    },
+    {
+      "day": 2,
+      "date": "2026-09-25",
+      "dateLabel": "9/25",
+      "weekday": "五",
+      "title": "神戶",
+      "area": "三宮／港島／摩耶山",
+      "summary": "8:00西村咖啡-10:00神戶王國動物園-摩耶山夜景-田中串勝(訂)",
+      "lodging": "神戶 Brenza hotel",
+      "hours": "西村咖啡三宮店0800-2300\n神戶王國動物園1000-1700(四休)\n摩耶山纜車(五六日)1000-2050\n田中串勝(一~五)1600-0000\n(六)1200-0100",
+      "notes": [
+        "西村咖啡 推薦5.6號套餐+咖啡歐雷 ￥1100",
+        "神戶王國動物園 三宮站售票機旁服務中心購買套票",
+        "門票+Port Liner套票￥2400/人(來回三宫站-计算科学中心)南出口",
+        "花間廚房-咖哩飯漢堡排拉麵、麵店貓頭鷹庵-烏龍麵",
+        "摩耶山 搭18系統巴士(六甲道方向) 三宮站前-摩耶ケーブル下",
+        "全區間來回票￥1560(摩耶ケーブル駅〜虹の駅〜星の駅)約15分",
+        "田中串勝 可訂位 推薦馬鈴薯沙拉 "
+      ],
+      "events": [
+        {
+          "time": "8:00",
+          "title": "西村咖啡",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%AB%E3%81%97%E3%82%80%E3%82%89%E7%8F%88%E7%90%B2%E5%BA%97%20%E4%B8%89%E5%AE%AE%E5%BA%97"
+        },
+        {
+          "time": "10:00",
+          "title": "神戶王國動物園",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B8%E3%81%A9%E3%81%86%E3%81%B6%E3%81%A4%E7%8E%8B%E5%9B%BD"
+        },
+        {
+          "time": "夜景",
+          "title": "摩耶山",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%91%A9%E8%80%B6%E5%B1%B1%20%E6%8E%AC%E6%98%9F%E5%8F%B0"
+        },
+        {
+          "time": "晚餐",
+          "title": "田中串勝(訂)",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%B2%E3%82%AB%E3%83%84%E7%94%B0%E4%B8%AD%20%E4%B8%89%E5%AE%AE%E5%BA%97"
+        }
+      ],
+      "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=BRENZA%20HOTEL%20%E7%A5%9E%E6%88%B6&destination=%E4%B8%B2%E3%82%AB%E3%83%84%E7%94%B0%E4%B8%AD%20%E4%B8%89%E5%AE%AE%E5%BA%97&travelmode=transit&waypoints=%E3%81%AB%E3%81%97%E3%82%80%E3%82%89%E7%8F%88%E7%90%B2%E5%BA%97%20%E4%B8%89%E5%AE%AE%E5%BA%97%7C%E7%A5%9E%E6%88%B8%E3%81%A9%E3%81%86%E3%81%B6%E3%81%A4%E7%8E%8B%E5%9B%BD%7C%E6%91%A9%E8%80%B6%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB%E9%A7%85%7C%E6%91%A9%E8%80%B6%E5%B1%B1%20%E6%8E%AC%E6%98%9F%E5%8F%B0",
+      "weather": [
+        {
+          "label": "神戶市中央區",
+          "url": "https://tenki.jp/lite/forecast/6/31/6310/28110/"
+        }
+      ],
+      "notesRaw": "西村咖啡 推薦5.6號套餐+咖啡歐雷 ￥1100\n神戶王國動物園 三宮站售票機旁服務中心購買套票\n門票+Port Liner套票￥2400/人(來回三宫站-计算科学中心)南出口\n花間廚房-咖哩飯漢堡排拉麵、麵店貓頭鷹庵-烏龍麵\n摩耶山 搭18系統巴士(六甲道方向) 三宮站前-摩耶ケーブル下\n全區間來回票￥1560(摩耶ケーブル駅〜虹の駅〜星の駅)約15分\n田中串勝 可訂位 推薦馬鈴薯沙拉 ",
+      "weatherDisplay": {
+        "condition": "多雲時晴",
+        "averageTemp": "27°C"
+      },
+      "weatherApi": {
+        "latitude": 34.6901,
+        "longitude": 135.1955,
+        "timezone": "Asia/Tokyo"
+      }
+    },
+    {
+      "day": 3,
+      "date": "2026-09-26",
+      "dateLabel": "9/26",
+      "weekday": "六",
+      "title": "神戶",
+      "area": "舞子／明石／神戶港",
+      "summary": "7:49JR三宮站-明石海峽大橋-魚之棚商店街-Umie-出石皿蕎麥麵-神戶港",
+      "lodging": "神戶 Brenza hotel",
+      "hours": "舞子海上散步道0900-1800\n魚之棚商店街1000-1700\n明石燒章魚磯1000-1900\nUmie百貨1000-2000\n超市0930-2130\n出石皿1100-2200(最後21:00)",
+      "notes": [
+        "明石海峽大橋 JR三宮站7:49/7:56/8:04-舞子站8:09/8:19/8:24 ",
+        "舞子海上散步道￥300/人",
+        "魚之棚商店街 JR舞子站-明石站 ",
+        "明石燒章魚磯(總店)章魚玉子燒15顆￥900 鰻魚玉子燒￥1050",
+        "(分店)10顆章魚玉子燒￥750 鰻魚玉子燒￥1000",
+        "Umie JR明石站-神戶(兵庫)站 出石皿 馬賽克廣場2樓 步行摩天輪 麵包超人"
+      ],
+      "events": [
+        {
+          "time": "7:49",
+          "title": "JR三宮站",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=JR%20%E4%B8%89%E3%83%8E%E5%AE%AE%E9%A7%85"
+        },
+        {
+          "time": "",
+          "title": "明石海峽大橋",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%88%9E%E5%AD%90%E6%B5%B7%E4%B8%8A%E3%83%97%E3%83%AD%E3%83%A0%E3%83%8A%E3%83%BC%E3%83%89"
+        },
+        {
+          "time": "",
+          "title": "魚之棚商店街",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%AD%9A%E3%81%AE%E6%A3%9A%E5%95%86%E5%BA%97%E8%A1%97"
+        },
+        {
+          "time": "",
+          "title": "Umie",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B8%E3%83%8F%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89%20umie"
+        },
+        {
+          "time": "",
+          "title": "出石皿蕎麥麵",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%87%BA%E7%9F%B3%E7%9A%BF%E3%81%9D%E3%81%B0%20%E7%A5%9E%E6%88%B6%20Harborland"
+        },
+        {
+          "time": "",
+          "title": "神戶港",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B8%E6%B8%AF%20%E3%83%8F%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89"
+        }
+      ],
+      "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=JR%20%E4%B8%89%E3%83%8E%E5%AE%AE%E9%A7%85&destination=%E7%A5%9E%E6%88%B8%E6%B8%AF%20%E3%83%8F%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89&travelmode=transit&waypoints=%E8%88%9E%E5%AD%90%E6%B5%B7%E4%B8%8A%E3%83%97%E3%83%AD%E3%83%A0%E3%83%8A%E3%83%BC%E3%83%89%7C%E9%AD%9A%E3%81%AE%E6%A3%9A%E5%95%86%E5%BA%97%E8%A1%97%7C%E3%81%9F%E3%81%93%E7%A3%AF%20%E6%98%8E%E7%9F%B3%7C%E7%A5%9E%E6%88%B8%E3%83%8F%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89%20umie",
+      "weather": [
+        {
+          "label": "神戶市中央區",
+          "url": "https://tenki.jp/lite/forecast/6/31/6310/28110/"
+        }
+      ],
+      "notesRaw": "明石海峽大橋 JR三宮站7:49/7:56/8:04-舞子站8:09/8:19/8:24 \n舞子海上散步道￥300/人\n魚之棚商店街 JR舞子站-明石站 \n明石燒章魚磯(總店)章魚玉子燒15顆￥900 鰻魚玉子燒￥1050\n(分店)10顆章魚玉子燒￥750 鰻魚玉子燒￥1000\nUmie JR明石站-神戶(兵庫)站 出石皿 馬賽克廣場2樓 步行摩天輪 麵包超人",
+      "weatherDisplay": {
+        "condition": "多雲時晴",
+        "averageTemp": "28°C"
+      },
+      "weatherApi": {
+        "latitude": 34.6901,
+        "longitude": 135.1955,
+        "timezone": "Asia/Tokyo"
+      }
+    },
+    {
+      "day": 4,
+      "date": "2026-09-27",
+      "dateLabel": "9/27",
+      "weekday": "日",
+      "title": "神戶",
+      "area": "美利堅公園／三宮",
+      "summary": "9:01City Loop-星巴克-美利堅公園-13:00鉄板ダイニング法貴(訂)-神戶商店街-賀正軒",
+      "lodging": "神戶 Brenza hotel",
+      "hours": "星巴克美利堅公園店0800-2200\n法貴(假日)1130/1300(訂位)\nHarbs 1100-2000\n賀正軒 1100-0400",
+      "notes": [
+        "搭City Loop巴士9:01/9:27地鐵三宮站前(往南)CL13-9:14/9:40港燈塔前CL17 ",
+        "拍Be Kobe 摩天輪",
+        "法貴需訂位 東門街對面樓梯下B1",
+        "午間套餐-神戶牛 80g/￥5390(含稅) 120g/￥7920",
+        "賀正軒 機器點餐付現金 推薦黑賀正(墨魚蒜味) 翠賀正(羅勒)"
+      ],
+      "events": [
+        {
+          "time": "9:01",
+          "title": "City Loop",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%9C%B0%E4%B8%8B%E9%89%84%E4%B8%89%E5%AE%AE%E9%A7%85%E5%89%8D%20City%20Loop%20%E3%83%90%E3%82%B9%E5%81%9C"
+        },
+        {
+          "time": "",
+          "title": "星巴克",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%90%E3%83%83%E3%82%AF%E3%82%B9%20%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%20%E7%A5%9E%E6%88%B8%E3%83%A1%E3%83%AA%E3%82%B1%E3%83%B3%E3%83%91%E3%83%BC%E3%82%AF%E5%BA%97"
+        },
+        {
+          "time": "",
+          "title": "美利堅公園",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%A1%E3%83%AA%E3%82%B1%E3%83%B3%E3%83%91%E3%83%BC%E3%82%AF%20%E7%A5%9E%E6%88%B8"
+        },
+        {
+          "time": "13:00",
+          "title": "法貴(訂)",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%89%84%E6%9D%BF%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%E6%B3%95%E8%B2%B4%20%E7%A5%9E%E6%88%B8"
+        },
+        {
+          "time": "",
+          "title": "神戶商店街",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%89%E5%AE%AE%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E8%A1%97"
+        },
+        {
+          "time": "",
+          "title": "賀正軒",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%B3%80%E6%AD%A3%E8%BB%92%20%E4%B8%89%E5%AE%AE%E5%BA%97"
+        }
+      ],
+      "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=BRENZA%20HOTEL%20%E7%A5%9E%E6%88%B6&destination=%E8%B3%80%E6%AD%A3%E8%BB%92%20%E4%B8%89%E5%AE%AE%E5%BA%97&travelmode=transit&waypoints=%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%90%E3%83%83%E3%82%AF%E3%82%B9%20%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%20%E7%A5%9E%E6%88%B8%E3%83%A1%E3%83%AA%E3%82%B1%E3%83%B3%E3%83%91%E3%83%BC%E3%82%AF%E5%BA%97%7CBE%20KOBE%20%E3%83%A2%E3%83%8B%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88%7C%E9%89%84%E6%9D%BF%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%E6%B3%95%E8%B2%B4%7C%E4%B8%89%E5%AE%AE%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E8%A1%97",
+      "weather": [
+        {
+          "label": "神戶市中央區",
+          "url": "https://tenki.jp/lite/forecast/6/31/6310/28110/"
+        }
+      ],
+      "notesRaw": "搭City Loop巴士9:01/9:27地鐵三宮站前(往南)CL13-9:14/9:40港燈塔前CL17 \n拍Be Kobe 摩天輪\n法貴需訂位 東門街對面樓梯下B1\n午間套餐-神戶牛 80g/￥5390(含稅) 120g/￥7920\n賀正軒 機器點餐付現金 推薦黑賀正(墨魚蒜味) 翠賀正(羅勒)",
+      "weatherDisplay": {
+        "condition": "多雲時晴",
+        "averageTemp": "29°C"
+      },
+      "weatherApi": {
+        "latitude": 34.6901,
+        "longitude": 135.1955,
+        "timezone": "Asia/Tokyo"
+      }
+    },
+    {
+      "day": 5,
+      "date": "2026-09-28",
+      "dateLabel": "9/28",
+      "weekday": "一",
+      "title": "神戶",
+      "area": "三宮／須磨／大阪難波",
+      "summary": "生田神社(30min)-10:10洋食の朝日-須磨海洋世界-須磨海邊夕陽-搭車到大阪-燒肉力丸道頓堀店(訂)",
+      "lodging": "大阪 東橫INN 難波",
+      "hours": "生田神社0700-1500\n洋食の朝日1100-1500(六日休)10:30開\n須磨海洋世界1000-1800\n燒肉力丸道頓堀店1600-0100(訂位)",
+      "notes": [
+        "洋食の朝日 炸牛排套餐￥1900 漢堡排 炸蝦套餐￥1300 飯無限吃",
+        "須磨海洋世界 步行JR神戶(兵庫)站-須磨海濱公園站",
+        "表演提早40分鐘佔位 虎鯨表演8排/海豚5排前會濕",
+        "燒肉力丸需訂位 90分鐘￥5478+飲料另外(單點/放題) 推薦牛舌橫膈膜"
+      ],
+      "events": [
+        {
+          "time": "早上",
+          "title": "生田神社",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%94%9F%E7%94%B0%E7%A5%9E%E7%A4%BE"
+        },
+        {
+          "time": "10:10",
+          "title": "洋食の朝日",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B4%8B%E9%A3%9F%E3%81%AE%E6%9C%9D%E6%97%A5%20%E7%A5%9E%E6%88%B8"
+        },
+        {
+          "time": "",
+          "title": "須磨海洋世界",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B8%E9%A0%88%E7%A3%A8%E3%82%B7%E3%83%BC%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89"
+        },
+        {
+          "time": "",
+          "title": "須磨海邊夕陽",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%A0%88%E7%A3%A8%E6%B5%B7%E5%B2%B8"
+        },
+        {
+          "time": "",
+          "title": "搭車到大阪",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E6%A8%AAINN%20%E5%A4%A7%E9%98%AA%E3%81%AA%E3%82%93%E3%81%B0"
+        },
+        {
+          "time": "",
+          "title": "燒肉力丸(訂)",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%84%BC%E8%82%89%E5%8A%9B%E4%B8%B8%20%E9%81%93%E9%A0%93%E5%A0%80%E5%BA%97"
+        }
+      ],
+      "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=BRENZA%20HOTEL%20%E7%A5%9E%E6%88%B6&destination=%E7%84%BC%E8%82%89%E5%8A%9B%E4%B8%B8%20%E9%81%93%E9%A0%93%E5%A0%80%E5%BA%97&travelmode=transit&waypoints=%E7%94%9F%E7%94%B0%E7%A5%9E%E7%A4%BE%7C%E6%B4%8B%E9%A3%9F%E3%81%AE%E6%9C%9D%E6%97%A5%20%E7%A5%9E%E6%88%B8%7C%E7%A5%9E%E6%88%B8%E9%A0%88%E7%A3%A8%E3%82%B7%E3%83%BC%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89%7C%E9%A0%88%E7%A3%A8%E6%B5%B7%E5%B2%B8%7C%E6%9D%B1%E6%A8%AAINN%20%E5%A4%A7%E9%98%AA%E3%81%AA%E3%82%93%E3%81%B0",
+      "weather": [
+        {
+          "label": "神戶市中央區",
+          "url": "https://tenki.jp/lite/forecast/6/31/6310/28110/"
+        },
+        {
+          "label": "大阪市",
+          "url": "https://tenki.jp/lite/forecast/6/30/6200/27100/"
+        }
+      ],
+      "notesRaw": "洋食の朝日 炸牛排套餐￥1900 漢堡排 炸蝦套餐￥1300 飯無限吃\n須磨海洋世界 步行JR神戶(兵庫)站-須磨海濱公園站\n表演提早40分鐘佔位 虎鯨表演8排/海豚5排前會濕\n燒肉力丸需訂位 90分鐘￥5478+飲料另外(單點/放題) 推薦牛舌橫膈膜",
+      "weatherDisplay": {
+        "condition": "多雲時晴",
+        "averageTemp": "28°C"
+      },
+      "weatherApi": {
+        "latitude": 34.6901,
+        "longitude": 135.1955,
+        "timezone": "Asia/Tokyo"
+      }
+    },
+    {
+      "day": 6,
+      "date": "2026-09-29",
+      "dateLabel": "9/29",
+      "weekday": "二",
+      "title": "大阪",
+      "area": "箕面／天王寺／難波",
+      "summary": "8:00勝尾寺-Hokkai Sozai壽司- 17:00阿倍野展望台(日落17:50)-超市-Narutoya居酒屋(訂)",
+      "lodging": "大阪 東橫INN 難波",
+      "hours": "勝尾寺0800-1700\nHokkai Sozai 1100-2200\n阿倍野展望台0900-2200\n伊藤洋華堂超市1000-2200\nNarutoya 1700-0000",
+      "notes": [
+        "勝尾寺 去程從南口出站搭計程車￥3200/4人 ",
+        "門票￥500/人明信片有A~F六個點要蓋 入口處F是最後一個",
+        "回程計程車或30號公車 11:20勝尾寺-11:41箕面萱野￥800/人(每30分一班)",
+        "Hokkai Sozai壽司 公車站上方Qsmall station 3樓",
+        "阿倍野展望台 門票￥2000/人或klook即買即用 16樓出示qrcode換票 59樓咖啡廳",
+        "Narutoya需訂位 低消飲料"
+      ],
+      "events": [
+        {
+          "time": "8:00",
+          "title": "勝尾寺",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%8B%9D%E5%B0%BE%E5%AF%BA"
+        },
+        {
+          "time": "",
+          "title": "Hokkai Sozai壽司",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=HOKKAI%20SOZAI%20%E7%AE%95%E9%9D%A2%E8%90%B1%E9%87%8E"
+        },
+        {
+          "time": "17:00",
+          "title": "阿倍野展望台",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AB%E3%82%B9%20%E5%B1%95%E6%9C%9B%E5%8F%B0%20%E3%83%8F%E3%83%AB%E3%82%AB%E3%82%B9300"
+        },
+        {
+          "time": "",
+          "title": "超市",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%A4%E3%83%88%E3%83%BC%E3%83%A8%E3%83%BC%E3%82%AB%E3%83%89%E3%83%BC%20%E3%81%82%E3%81%B9%E3%81%AE%E5%BA%97"
+        },
+        {
+          "time": "",
+          "title": "Narutoya居酒屋(訂)",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%AA%E3%82%8B%E3%81%A8%E3%82%84%20%E5%A4%A7%E9%98%AA%20%E9%9B%A3%E6%B3%A2"
+        }
+      ],
+      "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%9D%B1%E6%A8%AAINN%20%E5%A4%A7%E9%98%AA%E3%81%AA%E3%82%93%E3%81%B0&destination=%E3%81%AA%E3%82%8B%E3%81%A8%E3%82%84%20%E5%A4%A7%E9%98%AA%20%E9%9B%A3%E6%B3%A2&travelmode=transit&waypoints=%E5%8B%9D%E5%B0%BE%E5%AF%BA%7C%E7%AE%95%E9%9D%A2%E8%90%B1%E9%87%8E%E9%A7%85%7C%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AB%E3%82%B9%20%E5%B1%95%E6%9C%9B%E5%8F%B0%20%E3%83%8F%E3%83%AB%E3%82%AB%E3%82%B9300%7C%E3%82%A4%E3%83%88%E3%83%BC%E3%83%A8%E3%83%BC%E3%82%AB%E3%83%89%E3%83%BC%20%E3%81%82%E3%81%B9%E3%81%AE%E5%BA%97",
+      "weather": [
+        {
+          "label": "大阪市",
+          "url": "https://tenki.jp/lite/forecast/6/30/6200/27100/"
+        }
+      ],
+      "notesRaw": "勝尾寺 去程從南口出站搭計程車￥3200/4人 \n門票￥500/人明信片有A~F六個點要蓋 入口處F是最後一個\n回程計程車或30號公車 11:20勝尾寺-11:41箕面萱野￥800/人(每30分一班)\nHokkai Sozai壽司 公車站上方Qsmall station 3樓\n阿倍野展望台 門票￥2000/人或klook即買即用 16樓出示qrcode換票 59樓咖啡廳\nNarutoya需訂位 低消飲料",
+      "weatherDisplay": {
+        "condition": "多雲時晴",
+        "averageTemp": "29°C"
+      },
+      "weatherApi": {
+        "latitude": 34.6937,
+        "longitude": 135.5023,
+        "timezone": "Asia/Tokyo"
+      }
+    },
+    {
+      "day": 7,
+      "date": "2026-09-30",
+      "dateLabel": "9/30",
+      "weekday": "三",
+      "title": "大阪",
+      "area": "難波／臨空城／關西機場",
+      "summary": "難波八阪神社-道頓堀-Shabuwara壽喜燒(訂)-飯店拿行李-臨空城Outlet-關西機場",
+      "lodging": "大阪 東橫INN 難波",
+      "hours": "難波八阪神社0630-1700\nShabuwara1100-2200(訂位)\n大阪19:05-台北21:10 CI173",
+      "notes": [
+        "Shabuwara需訂位 推薦國產牛(不餓s普通m)中午飯吃到飽 打卡烏龍麵或甜點"
+      ],
+      "events": [
+        {
+          "time": "",
+          "title": "難波八阪神社",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%9B%A3%E6%B3%A2%E5%85%AB%E9%98%AA%E7%A5%9E%E7%A4%BE"
+        },
+        {
+          "time": "",
+          "title": "道頓堀",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%81%93%E9%A0%93%E5%A0%80%20%E3%82%B0%E3%83%AA%E3%82%B3%E3%82%B5%E3%82%A4%E3%83%B3"
+        },
+        {
+          "time": "",
+          "title": "Shabuwara壽喜燒(訂)",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%97%E3%82%83%E3%81%B6%E7%AC%91%20Shabuwara%20%E5%A4%A7%E9%98%AA"
+        },
+        {
+          "time": "",
+          "title": "飯店拿行李",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E6%A8%AAINN%20%E5%A4%A7%E9%98%AA%E3%81%AA%E3%82%93%E3%81%B0"
+        },
+        {
+          "time": "",
+          "title": "臨空城Outlet",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%8A%E3%82%93%E3%81%8F%E3%81%86%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0%E3%83%BB%E3%82%A2%E3%82%A6%E3%83%88%E3%83%AC%E3%83%83%E3%83%88"
+        },
+        {
+          "time": "",
+          "title": "關西機場",
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E7%AC%AC1%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB"
+        }
+      ],
+      "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%9D%B1%E6%A8%AAINN%20%E5%A4%A7%E9%98%AA%E3%81%AA%E3%82%93%E3%81%B0&destination=%E9%97%9C%E8%A5%BF%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4%20%E7%AC%AC1%E8%88%AA%E5%BB%88&travelmode=transit&waypoints=%E9%9B%A3%E6%B3%A2%E5%85%AB%E9%98%AA%E7%A5%9E%E7%A4%BE%7C%E9%81%93%E9%A0%93%E5%A0%80%7C%E3%81%97%E3%82%83%E3%81%B6%E7%AC%91%20SHABUWARA%20%E5%A4%A7%E9%98%AA%7C%E3%82%8A%E3%82%93%E3%81%8F%E3%81%86%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0%E3%83%BB%E3%82%A2%E3%82%A6%E3%83%88%E3%83%AC%E3%83%83%E3%83%88",
+      "weather": [
+        {
+          "label": "大阪市",
+          "url": "https://tenki.jp/lite/forecast/6/30/6200/27100/"
+        }
+      ],
+      "notesRaw": "Shabuwara需訂位 推薦國產牛(不餓s普通m)中午飯吃到飽 打卡烏龍麵或甜點",
+      "weatherDisplay": {
+        "condition": "多雲時晴",
+        "averageTemp": "28°C"
+      },
+      "weatherApi": {
+        "latitude": 34.6937,
+        "longitude": 135.5023,
+        "timezone": "Asia/Tokyo"
+      }
+    }
+  ]
+}
