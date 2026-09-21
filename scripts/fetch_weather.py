@@ -3,6 +3,7 @@
 
 Runs on GitHub Actions (see .github/workflows/weather.yml). Standard library only.
 """
+import html as html_mod
 import json, re, sys, urllib.request
 from datetime import datetime, timedelta, timezone
 
@@ -16,8 +17,8 @@ UA = "Mozilla/5.0 (compatible; kobe-trip-app/1.0; +https://penguin860809.github.
 ROW = re.compile(r'<dd class="forecast10days-actab">(.*?)<input ', re.S)
 DAY = re.compile(r'<div class="days">(\d{2})月(\d{2})日')
 ICON = re.compile(r'forecast-days-weather/([0-9A-Za-z_]+)\.png"[^>]*alt="([^"]*)"')
-HI = re.compile(r'class="high-temp">(-?\d+)℃')
-LO = re.compile(r'class="low-temp">(-?\d+)℃')
+HI = re.compile(r'class="high-temp">\s*(-?\d+)\s*(?:℃|&#8451;)')
+LO = re.compile(r'class="low-temp">\s*(-?\d+)\s*(?:℃|&#8451;)')
 POP = re.compile(r'class="prob-precip">\s*(\d+)%')
 MM = re.compile(r'class="precip">\s*(\d+)mm')
 
@@ -29,6 +30,7 @@ def fetch(url):
 
 
 def parse(html, today):
+    html = html_mod.unescape(html)  # tenki.jp serves ℃ as &#8451;
     days = {}
     year = today.year
     prev_month = None
