@@ -2,73 +2,121 @@
 const ICONS={clear:'☀️',cloud:'🌤️',rain:'🌧️'};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-function iconForCode(code){
-  if(code==null)return ICONS.cloud;
-  if(code<=1)return ICONS.clear;
-  if(code<=3)return ICONS.cloud;
-  return ICONS.rain;
+// WMO weather code → icon / 中文說明（與 tenki.jp 用語對齊）
+function describeCode(code){
+  if(code==null)return {icon:'🌤️',text:''};
+  if(code===0)return {icon:'☀️',text:'晴'};
+  if(code===1)return {icon:'🌤️',text:'晴時々曇'};
+  if(code===2)return {icon:'⛅',text:'曇時々晴'};
+  if(code===3)return {icon:'☁️',text:'曇'};
+  if(code===45||code===48)return {icon:'🌫️',text:'霧'};
+  if(code>=51&&code<=57)return {icon:'🌦️',text:'小雨'};
+  if(code>=61&&code<=67)return {icon:'🌧️',text:'雨'};
+  if(code>=71&&code<=77)return {icon:'🌨️',text:'雪'};
+  if(code>=80&&code<=82)return {icon:'🌦️',text:'陣雨'};
+  if(code>=95)return {icon:'⛈️',text:'雷雨'};
+  return {icon:'🌤️',text:''};
 }
+function iconForCode(code){return describeCode(code).icon}
 
 function renderRoute(events){
   return `<div class="route-flow">${events.map((e,i)=>{
     const m=e.bookingImg?String(e.title).match(/^(.*?)(\(已訂\))$/):null;
     const title=m?m[1]:e.title;
-    const booking=m?`<a class="route-link route-booking" href="${esc(e.bookingImg)}" data-lightbox="1" aria-label="查看訂位資訊">${esc(m[2])}</a>`:'';
+    const bk=(img,label,color)=>`<a class="route-link route-booking${color?' route-booking-'+esc(color):''}" href="${esc(img)}" data-lightbox="1" aria-label="查看訂位資訊">${esc(label)}</a>`;
+    const booking=m?bk(e.bookingImg,m[2],e.bookingColor):'';
+    const after=e.after?(()=>{const a=e.after;const inner=`${a.time?`<span class="route-time">${esc(a.time)}</span>`:''}${esc(a.text||'')}`;
+      const body=a.mapUrl?`<a class="route-link" href="${esc(a.mapUrl)}" target="_blank" rel="noopener noreferrer">${inner}</a>`:`<span class="route-link route-plain">${inner}</span>`;
+      return `<span class="route-after"><span class="route-sep">${esc(a.sep||'/')}</span>${body}${a.img?bk(a.img,a.booking||'(已訂)',a.color):''}</span>`})():'';
     return `
-    <span class="route-item">
-      <a class="route-link" href="${esc(e.mapUrl)}" target="_blank" rel="noopener noreferrer">
-        ${e.time?`<span class="route-time">${esc(e.time)}</span>`:''}${esc(title)}
-      </a>${booking}${i<events.length-1?'<span class="route-arrow">→</span>':''}
+    <span class="route-item${e.after?' route-item-wrap':''}">
+      ${e.mapUrl?`<a class="route-link" href="${esc(e.mapUrl)}" target="_blank" rel="noopener noreferrer">`:'<span class="route-link route-nolink">'}${e.time?`<span class="route-time">${esc(e.time)}</span>`:''}${esc(title)}${e.mapUrl?'</a>':'</span>'}${booking}${after}${i<events.length-1?'<span class="route-arrow">→</span>':''}
     </span>`}).join('')}</div>`;
+}
+
+async function fetchDaily(base,params){
+  const url=new URL(base);
+  url.search=new URLSearchParams(params).toString();
+  const res=await fetch(url,{cache:'no-store'});
+  if(!res.ok)throw new Error('http '+res.status);
+  const json=await res.json();
+  if(json.error||!json.daily||!Array.isArray(json.daily.time))throw new Error(json.reason||'bad response');
+  return json.daily;
+}
+
+let tenkiCache=null;
+async function loadTenki(){
+  if(tenkiCache)return tenkiCache;
+  tenkiCache=fetch('weather.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+  return tenkiCache;
+}
+const TENKI_ICON='https://static.tenki.jp/images/icon/forecast-days-weather/';
+// tenki.jp 天氣文字 → emoji（圖片載入失敗時的備援）
+function tenkiEmoji(text){
+  const t=String(text||'');
+  if(!t)return '🌤️';
+  if(t.includes('雷'))return '⛈️';
+  if(t.includes('雪'))return '🌨️';
+  if(t.startsWith('雨'))return '🌧️';
+  if(t.includes('雨'))return '🌦️';
+  if(t.startsWith('晴'))return t.includes('曇')?(t.includes('のち')?'🌥️':'🌤️'):'☀️';
+  if(t.startsWith('曇'))return t.includes('晴')?'⛅':'☁️';
+  if(t.includes('霧'))return '🌫️';
+  return '🌤️';
 }
 
 async function refreshWeather(day,article){
   const api=day.weatherApi;
-  const fallback=day.weatherDisplay?.averageTemp||'—';
-  const temp=article.querySelector('.weather-temp');
-  const icon=article.querySelector('.weather-icon');
-  const status=article.querySelector('.weather-status');
+  const iconEl=article.querySelector('.weather-icon');
+  const hiEl=article.querySelector('.weather-hi');
+  const loEl=article.querySelector('.weather-lo');
+  const rainEl=article.querySelector('.weather-rain');
 
-  temp.textContent=fallback;
-  icon.textContent=ICONS.cloud;
-  status.textContent='預報範圍外時顯示參考均溫';
-  if(!api)return;
-
-  const url=new URL('https://api.open-meteo.com/v1/gfs');
-  url.search=new URLSearchParams({
-    latitude:api.latitude,
-    longitude:api.longitude,
-    daily:'weather_code,temperature_2m_max,temperature_2m_min',
-    timezone:api.timezone||'Asia/Tokyo',
-    forecast_days:'16'
-  }).toString();
-
-  try{
-    const res=await fetch(url);
-    if(!res.ok)throw new Error('weather');
-    const json=await res.json();
-    const idx=json.daily?.time?.indexOf(day.date)??-1;
-    if(idx>=0){
-      const hi=json.daily.temperature_2m_max[idx];
-      const lo=json.daily.temperature_2m_min[idx];
-      const avg=Math.round((hi+lo)/2);
-      temp.textContent=`${avg}°C`;
-      icon.textContent=iconForCode(json.daily.weather_code[idx]);
-      status.textContent='API 自動更新';
+  // 1) tenki.jp 2週間天気（由 GitHub Actions 定時抓取到 weather.json，與連結頁面一致）
+  const areaCode=(day.weather?.[0]?.url||'').match(/\/(\d{5})\//)?.[1];
+  const tenki=await loadTenki();
+  const t=tenki?.areas?.[areaCode]?.days?.[day.date];
+  if(t){
+    if(t.hi!=null)hiEl.textContent=t.hi;
+    if(t.lo!=null)loEl.textContent=t.lo;
+    rainEl.textContent=t.mm!=null?`${t.mm}mm`:'—';
+    if(t.icon&&!window.TENKI_EMOJI_ONLY){
+      const img=document.createElement('img');
+      img.className='weather-icon-img';img.alt=t.text||'';img.title=t.text||'';
+      img.src=TENKI_ICON+t.icon+'.png';
+      img.onerror=()=>{iconEl.textContent=tenkiEmoji(t.text)};
+      iconEl.textContent='';iconEl.appendChild(img);
+    }else{
+      iconEl.textContent=tenkiEmoji(t.text);
     }
-  }catch(_){
-    status.textContent='暫時無法更新，點擊查看 tenki.jp';
+    return;
   }
+
+  // 2) 備援：Open-Meteo 綜合模式（weather.json 尚無該日資料時）
+  if(!api)return;
+  try{
+    const d=await fetchDaily('https://api.open-meteo.com/v1/forecast',{
+      latitude:api.latitude,longitude:api.longitude,
+      daily:'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum',
+      timezone:api.timezone||'Asia/Tokyo',forecast_days:'16'});
+    const i=d.time.indexOf(day.date);if(i<0)return;
+    if(d.temperature_2m_max[i]!=null)hiEl.textContent=Math.round(d.temperature_2m_max[i]);
+    if(d.temperature_2m_min[i]!=null)loEl.textContent=Math.round(d.temperature_2m_min[i]);
+    if(d.precipitation_sum[i]!=null)rainEl.textContent=`${Math.round(d.precipitation_sum[i])}mm`;
+    if(d.weather_code[i]!=null)iconEl.textContent=describeCode(d.weather_code[i]).icon;
+  }catch(_){}
 }
 
-const toMin=s=>{const m=String(s).match(/^(\d{1,2}):(\d{2})$/);return m?Number(m[1])*60+Number(m[2]):null};
+const toMin=s=>{const m=String(s).trim().match(/^(\d{1,2}):(\d{2})(?:\s*[–\-～]\s*\d{1,2}:\d{2})?$/);return m?Number(m[1])*60+Number(m[2]):null};
 function renderTable(t){
   const th=t.head.map(h=>`<th>${esc(h).replace(/\n/g,'<br>')}</th>`).join('');
   const from=t.boldFrom?toMin(t.boldFrom):null;
-  const rows=t.rows.map(r=>`<tr>${r.map((c,i)=>{const m=toMin(c);const b=(from!=null&&m!=null&&m>=from)||(t.boldFirst&&i===0);return `<td class="${b?'tt-bold':''}">${esc(c).replace(/\n/g,'<br>')}</td>`}).join('')}</tr>`).join('');
+  const cell=(c,i)=>{if(t.boldFirst&&i===0)return `<td class="tt-bold">${esc(c).replace(/\n/g,'<br>')}</td>`;const [main,sub]=String(c).split('|');const lines=main.split('\n');const html=lines.map(l=>{const m=toMin(l);return (from!=null&&m!=null&&m>=from)?`<span class="tt-bold">${esc(l)}</span>`:esc(l)}).join('<br>');return `<td${sub?' class="tt-has-sub"':''}>${html}${sub?`<span class="tt-sub">${esc(sub)}</span>`:''}</td>`};
+  const br=new Set(t.boldRows||[]);
+  const rows=t.rows.map((r,ri)=>`<tr${br.has(ri)?' class="tt-bold-row"':''}>${r.map(cell).join('')}</tr>`).join('');
   return `<div class="tt-table-wrap">
     ${t.caption?`<div class="tt-caption">${esc(t.caption)}</div>`:''}
-    <div class="tt-scroll"><table class="tt-table"><thead><tr>${th}</tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="tt-scroll"><table class="tt-table">${t.widths?`<colgroup>${t.widths.map(w=>`<col style="width:${esc(w)}">`).join('')}</colgroup>`:''}<thead><tr>${th}</tr></thead><tbody>${rows}</tbody></table></div>
   </div>`;
 }
 
@@ -178,9 +226,12 @@ fetch('trip-data.json').then(r=>r.json()).then(trip=>{
           <div class="dayline"><strong>DAY ${d.day}</strong><span>${esc(d.dateLabel)} (${esc(d.weekday)})</span></div>
           <h1 class="city">${esc(d.title)}</h1>
         </div>
-        <a class="weather" href="${esc(weatherUrl)}" target="_blank" rel="noopener noreferrer" aria-label="在 tenki.jp 查看天氣">
+        <a class="weather" href="${esc(weatherUrl)}" target="_blank" rel="noopener noreferrer" aria-label="在 tenki.jp 查看 2 週間天氣">
           <span class="weather-icon">🌤️</span>
-          <span><div class="weather-temp">${esc(d.weatherDisplay?.averageTemp||'—')}</div><div class="weather-label">日均溫</div><div class="weather-status"></div></span>
+          <span class="weather-data">
+            <div class="weather-temp"><span class="weather-hi">—</span><span class="weather-sep">/</span><span class="weather-lo">—</span><span class="weather-unit">℃</span></div>
+            <div class="weather-rainrow">降水量 <span class="weather-rain">—</span></div>
+          </span>
         </a>
       </header>
       <section class="section"><div class="route-box">${renderRoute(d.events)}</div></section>
