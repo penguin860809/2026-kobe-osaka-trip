@@ -312,5 +312,8 @@ fetch('trip-data.json').then(r=>r.json()).then(trip=>{
 });
 
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
+  // 新版 SW 接管後自動重新載入一次，讓手機立即看到最新內容
+  const swHadController=!!navigator.serviceWorker.controller;let swReloading=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(swHadController&&!swReloading){swReloading=true;location.reload();}});
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(reg=>{reg.update();setInterval(()=>reg.update(),60*60*1000);}).catch(()=>{}));
 }
