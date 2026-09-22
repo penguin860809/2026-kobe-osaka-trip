@@ -920,6 +920,13 @@
         "note": "プロテカ エアロフレックス ライト",
         "img": "img/shop/proteca.jpg",
         "url": "https://www.proteca.jp/"
+       },
+       {
+        "key": "uniqlo-boxer",
+        "name": "UNIQLO 男生白色內褲",
+        "note": "エアリズムボクサーブリーフ（日本官網目前無白色，店內確認；圖為淺灰）",
+        "img": "img/shop/uniqlo-boxer.jpg",
+        "url": "https://www.uniqlo.com/jp/ja/men/innerwear/underwear"
        }
       ]
      },
@@ -1100,6 +1107,20 @@
         "note": "アリナミンEXプラス",
         "img": "img/shop/alinamin.jpg",
         "url": "https://alinamin.jp/lineup/alinaminexplus.html"
+       },
+       {
+        "key": "pabron-momo",
+        "name": "大正百保能 パブロンゴールドA 微粒 1瓶(代購)",
+        "note": "大正製薬 パブロンゴールドA〈微粒〉44包（綜合感冒藥，指定第2類医薬品）",
+        "img": "img/shop/pabron.jpg",
+        "url": "https://www.catalog-taisho.com/category/02/001/04515/"
+       },
+       {
+        "key": "maquillage-liquid",
+        "name": "MAQuillAGE ESSENCE LIQUID EX 24mL 1瓶(代購)",
+        "note": "資生堂 マキアージュ エッセンスリキッド EX（美容液粉底 SPF50+ PA++++，全5色）",
+        "img": "img/shop/maquillage-liquid.jpg",
+        "url": "https://www.shiseido.co.jp/sw/onlinestore/products/H59502.html"
        }
       ]
      },
