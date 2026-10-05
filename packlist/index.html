@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>行李清單</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="行李清單">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#EDF1F3">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+/* Layout: one narrow column; boarding-pass header, sticky section tabs, a single list card per section */
+:root{
+  --bg:#EDF1F3; --surface:#FFFFFF; --ink:#14212B; --muted:#5D6D77; --line:#DAE1E5;
+  --accent:#0D7A64; --accent-soft:#DCEFE9; --on-accent:#FFFFFF;
+  --tag:#9A5714; --tag-bg:#F6EADB; --danger:#B3261E; --danger-soft:#F9E3E1;
+  --font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --font-data:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5;padding-inline:16px;-webkit-tap-highlight-color:transparent}
+.app{max-width:560px;margin:0 auto;padding-block:18px 56px;display:flex;flex-direction:column;gap:14px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-family:var(--font-data);font-variant-numeric:tabular-nums}
+
+.apptitle{margin:0;font-size:20px;font-weight:700;letter-spacing:.04em;text-wrap:balance}
+/* boarding pass */
+.pass{background:var(--surface);border-radius:16px;position:relative}
+.pass-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:16px 18px 14px}
+.label{font-family:var(--font-data);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.who{display:block;width:100%;font:inherit;font-size:24px;font-weight:700;line-height:1.25;color:var(--ink);background:transparent;border:0;padding:2px 6px;margin-left:-6px;border-radius:6px;text-overflow:ellipsis}
+.who:focus{outline:none;background:var(--accent-soft)}
+.score{text-align:right;flex-shrink:0}
+.score b{font-family:var(--font-data);font-size:26px;font-weight:600;color:var(--accent)}
+.score span{font-family:var(--font-data);font-size:16px;color:var(--muted)}
+.perf{position:relative;border-top:2px dashed var(--line);margin:0 14px}
+.perf::before,.perf::after{content:"";position:absolute;top:-10px;width:18px;height:18px;border-radius:50%;background:var(--bg)}
+.perf::before{left:-24px}.perf::after{right:-24px}
+.pass-bottom{padding:12px 18px 16px;display:flex;flex-direction:column;gap:8px}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.left{font-size:13px;color:var(--muted)}
+
+/* travelers */
+.people{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:15px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip.add{border-style:dashed;color:var(--muted)}
+.chip-input{display:flex;gap:6px}
+.chip-input input{width:9em;padding:6px 12px;border-radius:99px;border:1px solid var(--accent);background:var(--surface);color:var(--ink);font:inherit;font-size:15px}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:6px;margin-block:-6px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg button{border-radius:9px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;line-height:1.25}
+.seg button[aria-selected="true"]{background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.seg .t{font-weight:700;font-size:15px}
+.seg .c{font-family:var(--font-data);font-size:12px;color:var(--muted)}
+.seg .c.full{color:var(--accent)}
+
+/* toolbar */
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tools .tbtn{padding:8px 4px;text-align:center;white-space:nowrap}
+.tbtn{font-size:14px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.tbtn[aria-pressed="true"]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.tbtn.arm{color:var(--danger);border-color:var(--danger);background:var(--danger-soft)}
+
+/* list */
+.card{background:var(--surface);border-radius:14px;overflow:hidden}
+.ghead{display:flex;justify-content:space-between;padding:12px 16px 4px;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.ghead .num{font-weight:500}
+.ghead + ul{border-top:0}
+ul.items{list-style:none;margin:0;padding:0}
+.item{display:grid;grid-template-columns:44px minmax(0,1fr) auto auto;align-items:center;gap:4px;padding:4px 10px 4px 4px;border-top:1px solid var(--line)}
+.ghead + ul .item:first-child{border-top:0}
+.check{width:44px;height:44px;display:grid;place-items:center}
+.check span{width:24px;height:24px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center;transition:background .15s,border-color .15s}
+.check svg{width:14px;height:14px;opacity:0}
+.done .check span{background:var(--accent);border-color:var(--accent)}
+.done .check svg{opacity:1}
+.body{min-width:0;display:flex;flex-direction:column}
+.txt{width:100%;border:0;background:transparent;color:var(--ink);font:inherit;font-size:16px;padding:3px 6px;border-radius:6px;text-overflow:ellipsis}
+.txt:focus{outline:none;background:var(--accent-soft)}
+.done .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;padding:0 6px 2px;font-size:12px;line-height:1.4}
+.meta:empty{display:none}
+.tag{color:var(--tag);background:var(--tag-bg);border-radius:4px;padding:0 5px;font-weight:500}
+.note{color:var(--muted)}
+.step{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:99px;height:34px}
+.step button{width:30px;height:32px;font-size:18px;color:var(--muted);line-height:1}
+.step input{width:2.6em;text-align:center;border:0;background:transparent;color:var(--ink);font-family:var(--font-data);font-size:15px;padding:0}
+.step input:focus{outline:none;background:var(--accent-soft);border-radius:4px}
+.done .step{opacity:.45}
+.del{font-size:13px;color:var(--danger);padding:6px 8px;border-radius:6px}
+.del:hover{background:var(--danger-soft)}
+.hidden-note{padding:10px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
+.empty{padding:22px 16px;text-align:center;color:var(--muted);font-size:14px}
+
+/* add row */
+.addrow{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--bg) 45%,var(--surface))}
+.addrow input,.addrow select{font:inherit;font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;min-width:0}
+.addrow .name{flex:1 1 10em}
+.addrow .q{width:4.2em;font-family:var(--font-data);text-align:center}
+.addrow select{flex:0 1 auto}
+.addrow button{background:var(--accent);color:var(--on-accent);border-radius:8px;padding:7px 16px;font-weight:700}
+
+.card.loading{position:relative}
+.card.loading>:not(.loadmsg){opacity:.35;pointer-events:none}
+.loadmsg{padding:12px 16px;font-size:14px;color:var(--accent);font-weight:500;border-bottom:1px solid var(--line)}
+/* traveler settings */
+.settings{background:var(--surface);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.settings label{font-size:13px;color:var(--muted)}
+.settings .row{display:flex;flex-wrap:wrap;gap:8px}
+.tip{font-size:13px;color:var(--muted);padding:0 4px}
+.status{font-size:12px;color:var(--muted);text-align:center;display:flex;justify-content:center;align-items:center;gap:6px}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+.status.cloud i{background:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<script>
+(function(){
+"use strict";
+const SECTIONS=[
+  {key:"prep",name:"行前準備",qty:false},
+  {key:"carry",name:"隨身包",qty:true},
+  {key:"bag",name:"行李",qty:true,groups:["衣物","盥洗保養","3C 充電","藥品保健","生活用品"]}
+];
+// [text, qty, {sug, note}]  sug = 補充建議
+const TEMPLATE={
+  prep:[
+    ["預辦登機",null],["填寫入境卡",null,{note:"日本可用 Visit Japan Web"}],["買網路",null,{note:"網卡或 eSIM"}],["買保險",null,{note:"旅平險、不便險"}],
+    ["換外幣",null,{sug:1}],["確認護照效期",null,{sug:1,note:"入境多要求 6 個月以上"}]
+  ],
+  carry:[
+    ["護照",1],["外幣",1],["信用卡",1],["行動電源",1],["Airpods",1],["相機",1],["鋰電池",1],
+    ["交通卡",1,{sug:1,note:"Suica、ICOCA 等"}],["衛生紙、濕紙巾",1,{sug:1}],["原子筆",1,{sug:1,note:"填表用"}],["頸枕",1,{sug:1}],["鑰匙",1,{sug:1}],
+    ["網卡",1]
+  ],
+  bag:[
+    ["衣物",[["短袖",1],["長袖",1],["短褲",1],["長褲",1],["睡衣",1],["睡褲",1],["內衣",1],["內褲",1],["襪子",1],["外套",1],["帽子",1],["太陽眼鏡",1],
+      ["球鞋",1,{sug:1}],["拖鞋",1,{sug:1}]]],
+    ["盥洗保養",[["防曬乳",1],["洗面乳",1],["牙膏牙刷",1],["牙線棒",1],["乳液",1],["髮油",1],["指甲剪",1],["綁頭髮",1],["瀏海貼",1],
+      ["衛生棉",1],["護唇膏",1],["梳子",1]]],
+    ["3C 充電",[["手機充電線",1],["耳機充電線",1],["相機充電線",1],["萬用轉接頭",1,{sug:1}],["多插頭充電座",1,{sug:1}]]],
+    ["藥品保健",[["常備藥品",1],["痠痛貼布",1],["保健品",1],["噴鼻藥",1],["眼藥水",1],["OK 繃",1,{sug:1}]]],
+    ["生活用品",[["水果盆",1],["洗衣盆",1],["眼罩",1],["夾鏈袋",1],["垃圾袋",1],["雨傘",1],["小被被",1],["石頭",1],["行李秤",1],
+      ["環保購物袋",1,{sug:1}]]]
+  ]
+};
+const TEMPLATE_VER=3;
+// 舊版預設數量；沒被改過的會換成新預設 1
+const OLD_QTY={"短袖":"3","長袖":"2","長褲":"2","內衣":"3","內褲":"5","襪子":"5","綁頭髮":"2","夾鏈袋":"5","垃圾袋":"3","口罩":"2"};
+// v1 → v2：改名對照與移除的預設項目
+const RENAMED={"現金":"外幣","面紙、濕紙巾":"衛生紙、濕紙巾","家門鑰匙":"鑰匙","好走的鞋":"球鞋","延長線":"多插頭充電座"};
+const REMOVED=new Set(["開通信用卡海外交易","確認機票與住宿訂單","重要文件截圖備份","下載離線地圖與交通 App","確認行李重量規定","出門前關瓦斯、拔插頭、倒垃圾",
+  "手機","登機證","口罩","卸妝用品","化妝品","隱形眼鏡、眼鏡","生理用品","充電頭","相機記憶卡","洗衣精、洗衣片","衣架、曬衣夾","髒衣袋","耳塞"]);
+function migrate(oldList){
+  const fresh=newList(), byText=new Map();
+  SECTIONS.forEach(s=>fresh[s.key].forEach(it=>byText.set(it.text,it)));
+  SECTIONS.forEach(s=>(oldList[s.key]||[]).forEach(old=>{
+    const name=RENAMED[old.text]||old.text, hit=byText.get(name);
+    if(hit){hit.done=!!old.done; if(hit.qty!==null&&old.qty!=null&&OLD_QTY[old.text]!==old.qty) hit.qty=old.qty; byText.delete(name)}
+    else if(!REMOVED.has(old.text)&&!byText.has(name)) fresh[s.key].push(old); // 使用者自己新增或改過的項目保留
+  }));
+  return fresh;
+}
+
+const uid=()=>Math.random().toString(36).slice(2,10);
+const mk=(t,q,o={},group="")=>({id:uid(),text:t,qty:q==null?null:String(q),done:false,note:o.note||"",sug:!!o.sug,group});
+function newList(){
+  return {
+    prep:TEMPLATE.prep.map(a=>mk(a[0],a[1],a[2])),
+    carry:TEMPLATE.carry.map(a=>mk(a[0],a[1],a[2])),
+    bag:TEMPLATE.bag.flatMap(([g,arr])=>arr.map(a=>mk(a[0],a[1],a[2],g)))
+  };
+}
+const newTraveler=name=>({id:uid(),name,list:newList()});
+function freshState(){return {v:1,tv:TEMPLATE_VER,travelers:[newTraveler("我")]}}
+function normalize(s){
+  if(!s||!Array.isArray(s.travelers)||!s.travelers.length) return freshState();
+  s.travelers.forEach(t=>{t.list=t.list||{};SECTIONS.forEach(sec=>{if(!Array.isArray(t.list[sec.key]))t.list[sec.key]=[]})});
+  if((s.tv||1)<TEMPLATE_VER){s.travelers.forEach(t=>{t.list=migrate(t.list)});s.tv=TEMPLATE_VER}
+  return s;
+}
+
+/* ---------- storage ---------- */
+const LS_KEY="packlist-state-v1", UI_KEY="packlist-ui-v1";
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let state=normalize(lsGet(LS_KEY));
+let ui=Object.assign({traveler:null,section:"prep",hideDone:false,edit:false},lsGet(UI_KEY)||{});
+ui.edit=false;
+if(!state.travelers.some(t=>t.id===ui.traveler)) ui.traveler=state.travelers[0].id;
+if(!SECTIONS.some(s=>s.key===ui.section)) ui.section="prep";
+
+let mode="local", ref=null, lastCloud=null, timer=null, writing=false, again=false, missed=false;
+let ready=true, dirty=false;          // ready：雲端清單讀回來之前不准寫，避免預設清單蓋掉已存的清單
+const hadLocal=!!lsGet(LS_KEY);
+function canon(v){return JSON.stringify(v,(k,x)=>x&&typeof x==="object"&&!Array.isArray(x)?Object.keys(x).sort().reduce((o,kk)=>(o[kk]=x[kk],o),{}):x)}
+function saveUI(){lsSet(UI_KEY,{traveler:ui.traveler,section:ui.section,hideDone:ui.hideDone})}
+function save(){
+  dirty=true;
+  lsSet(LS_KEY,state);
+  if(ref){clearTimeout(timer);timer=setTimeout(flush,350)}
+}
+async function flush(){
+  clearTimeout(timer); timer=null;
+  if(!ref) return;
+  const str=canon(state);
+  if(str===lastCloud) return;
+  if(writing){again=true;return}
+  writing=true;
+  try{await ref.set({state:JSON.parse(str)});lastCloud=str;setMode("cloud")}
+  catch(e){
+    if(e&&e.code==="unavailable"){setTimeout(flush,1500+Math.random()*1000)}
+    else if(e&&e.code!=="resource_exhausted"){ref=null;setMode("local")}
+  }
+  writing=false;
+  if(again){again=false;flush();return}
+  if(missed&&ref&&!timer){missed=false;try{applyCloud(await ref.get())}catch(e){}}
+}
+// 關掉 App 或切到背景時立刻存，不等計時器
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&timer)flush()});
+window.addEventListener("pagehide",()=>{if(timer)flush()});
+
+function applyCloud(snap){
+  if(!snap||!snap.exists) return false;
+  const s=(snap.data()||{}).state; if(!s) return false;
+  const str=canon(s);
+  if(str===lastCloud) return true;
+  lastCloud=str;
+  state=normalize(JSON.parse(str));
+  if(!state.travelers.some(t=>t.id===ui.traveler)) ui.traveler=state.travelers[0].id;
+  lsSet(LS_KEY,state);
+  requestRender();
+  return true;
+}
+function finishLoading(){if(!ready){ready=true;render()}}
+async function connect(){
+  const giveUp=setTimeout(finishLoading,12000);
+  try{
+    if(!window.claude||!window.claude.use){finishLoading();return}
+    const [db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);
+    if(!db||!user){finishLoading();return}
+    const id=await user.id();
+    if(!id){finishLoading();return}
+    const r=db.doc("data/users/"+id+"/checklist");
+    let first=null;
+    for(let i=0;i<3&&!first;i++){try{first=await r.get()}catch(e){if(!(e&&e.code==="unavailable"))throw e;await new Promise(z=>setTimeout(z,800))}}
+    if(!first) throw new Error("load failed");
+    const userEditedMeanwhile=ready&&dirty;   // 讀取太久時使用者已經先用本機清單操作
+    ref=r;
+    if(first.exists&&!userEditedMeanwhile){applyCloud(first);setMode("cloud")}
+    else if(first.exists||hadLocal||dirty){flush()} // 帳號裡還沒有清單：把這台裝置的清單存上去
+    clearTimeout(giveUp); finishLoading();
+    r.onSnapshot(snap=>{
+      if(!ref||snap.metadata.hasPendingWrites||!snap.exists) return;
+      if(timer||writing){missed=true;return}
+      applyCloud(snap);
+    },()=>{});
+  }catch(e){clearTimeout(giveUp);ref=null;setMode("local");finishLoading()}
+}
+function setMode(m){if(mode!==m){mode=m;renderStatus()}}
+
+/* ---------- helpers ---------- */
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const cur=()=>state.travelers.find(t=>t.id===ui.traveler)||state.travelers[0];
+const secDef=k=>SECTIONS.find(s=>s.key===k);
+function findItem(id){const L=cur().list;for(const k in L){const it=L[k].find(i=>i.id===id);if(it)return {it,arr:L[k]}}return null}
+const CHECK='<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5 7.4l3 3 6-6.6" fill="none" stroke="var(--on-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+let addingTraveler=false, pendingRender=false;
+const app=document.getElementById("app");
+
+function requestRender(){
+  const a=document.activeElement;
+  if(a&&app.contains(a)&&a.matches("input.txt,.step input,#rename")){pendingRender=true;return}
+  render();
+}
+app.addEventListener("focusout",()=>{if(pendingRender){setTimeout(()=>{const a=document.activeElement;if(!(a&&app.contains(a)&&a.matches("input.txt,.step input,#rename"))){pendingRender=false;render()}},0)}});
+
+/* ---------- render ---------- */
+function itemRow(it,sec){
+  const qty=sec.qty&&it.qty!==null;
+  return `<li class="item${it.done?" done":""}" data-id="${it.id}">
+    <button class="check" data-act="toggle" aria-pressed="${it.done}" aria-label="${it.done?"取消完成":"標記完成"}：${esc(it.text)}"><span>${CHECK}</span></button>
+    <div class="body"><input class="txt" id="t-${it.id}" data-act="text" value="${esc(it.text)}" aria-label="項目名稱" enterkeyhint="done"></div>
+    ${qty?`<div class="step"><button data-act="minus" aria-label="減少">−</button><input id="q-${it.id}" data-act="qty" inputmode="numeric" maxlength="3" value="${esc(it.qty)}" aria-label="數量"><button data-act="plus" aria-label="增加">+</button></div>`:"<span></span>"}
+    ${ui.edit?`<button class="del" data-act="del">刪除</button>`:"<span></span>"}
+  </li>`;
+}
+function count(arr){return {done:arr.filter(i=>i.done).length,total:arr.length}}
+
+function render(){
+  const t=cur(), L=t.list, sec=secDef(ui.section);
+  const all=SECTIONS.flatMap(s=>L[s.key]); const tot=count(all);
+  const pct=tot.total?Math.round(tot.done/tot.total*100):0;
+  const items=L[sec.key];
+
+  let people=state.travelers.map(p=>`<button class="chip" data-act="pick" data-tid="${p.id}" aria-pressed="${p.id===t.id}">${esc(p.name||"未命名")}</button>`).join("");
+  people+= addingTraveler
+    ? `<form class="chip-input" data-form="traveler"><input id="newTraveler" placeholder="旅客名字" maxlength="16" aria-label="新旅客名字"><button class="chip" type="submit">加入</button></form>`
+    : `<button class="chip add" data-act="addTraveler">＋ 旅客</button>`;
+
+  const tabs=SECTIONS.map(s=>{const c=count(L[s.key]);const full=c.total&&c.done===c.total;
+    return `<button role="tab" data-act="tab" data-sec="${s.key}" aria-selected="${s.key===sec.key}"><span class="t">${s.name}</span><span class="c num${full?" full":""}">${full?"✓ ":""}${c.done}/${c.total}</span></button>`}).join("");
+
+  // list body
+  let body="", hiddenN=0;
+  const visible=it=>{if(ui.hideDone&&it.done){hiddenN++;return false}return true};
+  if(sec.groups){
+    const groups=[...sec.groups];
+    items.forEach(i=>{const g=i.group||"其他";if(!groups.includes(g))groups.push(g)});
+    groups.forEach(g=>{
+      const gi=items.filter(i=>(i.group||"其他")===g); if(!gi.length) return;
+      const vis=gi.filter(visible); if(!vis.length) return;
+      const c=count(gi);
+      body+=`<div class="ghead"><span>${esc(g)}</span><span class="num">${c.done}/${c.total}</span></div><ul class="items">${vis.map(i=>itemRow(i,sec)).join("")}</ul>`;
+    });
+  }else{
+    const vis=items.filter(visible);
+    if(vis.length) body=`<ul class="items">${vis.map(i=>itemRow(i,sec)).join("")}</ul>`;
+  }
+  if(!body) body=`<div class="empty">${items.length?"這一區都完成了 ✓":"還沒有項目，從下方新增第一項"}</div>`;
+  if(hiddenN) body+=`<div class="hidden-note">已隱藏 ${hiddenN} 個完成項目</div>`;
+
+  const groupSel=sec.groups?`<select id="addGroup" aria-label="分類">${[...new Set([...sec.groups,...items.map(i=>i.group||"其他")])].map(g=>`<option${g===ui.lastGroup?" selected":""}>${esc(g)}</option>`).join("")}</select>`:"";
+  const addRow=`<form class="addrow" data-form="item"><input class="name" id="addName" placeholder="新增項目到「${sec.name}」" maxlength="40" aria-label="新項目名稱" enterkeyhint="done">${sec.qty?`<input class="q" id="addQty" inputmode="numeric" maxlength="3" value="1" aria-label="數量">`:""}${groupSel}<button type="submit">新增</button></form>`;
+
+  const settings=ui.edit?`<div class="settings">
+    <div class="row">
+      <button class="tbtn" data-act="resetList" data-confirm="確定重設？清單會回到預設內容">重設為預設清單</button>
+      ${state.travelers.length>1?`<button class="tbtn" data-act="delTraveler" data-confirm="確定刪除「${esc(t.name)}」？">刪除這位旅客</button>`:""}
+    </div></div>`:"";
+
+  app.innerHTML=`
+    <h1 class="apptitle">行李清單</h1>
+    <section class="pass" aria-label="完成進度">
+      <div class="pass-top">
+        <div style="min-width:0"><div class="label">Traveler · 旅客</div><input class="who" id="rename" data-act="rename" value="${esc(t.name)}" maxlength="16" aria-label="旅客名稱（點擊修改）" enterkeyhint="done"></div>
+        <div class="score"><div class="label">已完成</div><b>${tot.done}</b><span>/${tot.total}</span></div>
+      </div>
+      <div class="perf"></div>
+      <div class="pass-bottom">
+        <div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+        <div class="left">${tot.total-tot.done?`還有 ${tot.total-tot.done} 項，完成 ${pct}%`:"全部準備好了，出發吧！"}</div>
+      </div>
+    </section>
+    <div class="people" aria-label="旅客">${people}</div>
+    <div class="tabs"><div class="seg" role="tablist">${tabs}</div></div>
+    <div class="tools">
+      <button class="tbtn" data-act="hideDone" aria-pressed="${ui.hideDone}">隱藏已完成</button>
+      <button class="tbtn" data-act="uncheck" data-confirm="再按一次確認">清除勾選</button>
+      <button class="tbtn" data-act="edit" aria-pressed="${ui.edit}">${ui.edit?"完成編輯":"編輯/刪除"}</button>
+    </div>
+    ${settings}
+    <div class="card${ready?"":" loading"}" ${ready?"":'aria-busy="true"'}>${ready?"":'<div class="loadmsg">正在讀取你的清單…</div>'}${body}${addRow}</div>
+    <p class="tip">點旅客名字或項目文字即可修改，數量可直接輸入或按 ＋／−。每位旅客的清單各自獨立。</p>
+    <div class="status" id="status"></div>`;
+  renderStatus();
+  if(addingTraveler){const n=document.getElementById("newTraveler");n&&n.focus()}
+}
+function renderStatus(){
+  const el=document.getElementById("status"); if(!el) return;
+  el.className="status"+(mode==="cloud"?" cloud":"");
+  el.innerHTML=`<i></i>${mode==="cloud"?"已存到你的帳號，換裝置也看得到你自己的清單":"清單存在這支手機裡，關掉再開也會保留"}`;
+}
+
+/* ---------- events ---------- */
+const armed=new WeakMap();
+function needsConfirm(btn){
+  if(!btn.dataset.confirm) return false;
+  if(armed.has(btn)) return false;
+  const orig=btn.textContent; btn.textContent=btn.dataset.confirm; btn.classList.add("arm");
+  armed.set(btn,setTimeout(()=>{armed.delete(btn);btn.textContent=orig;btn.classList.remove("arm")},3500));
+  return true;
+}
+app.addEventListener("click",e=>{
+  if(!ready) return;
+  const b=e.target.closest("[data-act]"); if(!b||b.tagName==="INPUT") return;
+  const act=b.dataset.act, li=b.closest(".item"), f=li&&findItem(li.dataset.id);
+  if(needsConfirm(b)) return;
+  switch(act){
+    case "toggle": f.it.done=!f.it.done; save(); render(); break;
+    case "plus": case "minus":{
+      let n=parseInt(f.it.qty,10); if(isNaN(n)) n=0;
+      n=act==="plus"?Math.min(999,n+1):Math.max(0,n-1);
+      f.it.qty=String(n); li.querySelector(".step input").value=n; save(); break;}
+    case "del": f.arr.splice(f.arr.indexOf(f.it),1); save(); render(); break;
+    case "tab": ui.section=b.dataset.sec; saveUI(); render(); break;
+    case "pick": ui.traveler=b.dataset.tid; addingTraveler=false; saveUI(); render(); break;
+    case "addTraveler": addingTraveler=true; render(); break;
+    case "hideDone": ui.hideDone=!ui.hideDone; saveUI(); render(); break;
+    case "edit": ui.edit=!ui.edit; render(); break;
+    case "uncheck": cur().list[ui.section].forEach(i=>i.done=false); save(); render(); break;
+    case "resetList": cur().list=newList(); save(); render(); break;
+    case "delTraveler":{
+      const i=state.travelers.indexOf(cur()); state.travelers.splice(i,1);
+      ui.traveler=state.travelers[Math.max(0,i-1)].id; ui.edit=false; saveUI(); save(); render(); break;}
+  }
+});
+app.addEventListener("input",e=>{
+  if(!ready) return;
+  const el=e.target, act=el.dataset.act;
+  if(act==="text"){const f=findItem(el.closest(".item").dataset.id); f.it.text=el.value; save()}
+  else if(act==="qty"){const v=el.value.replace(/\D/g,"").slice(0,3); if(v!==el.value) el.value=v; findItem(el.closest(".item").dataset.id).it.qty=v; save()}
+  else if(act==="rename"){cur().name=el.value; save(); const c=app.querySelector('.chip[aria-pressed="true"]'); if(c) c.textContent=el.value||"未命名"}
+  else if(el.id==="addQty"){el.value=el.value.replace(/\D/g,"").slice(0,3)}
+});
+app.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches("input.txt,.step input,#rename")){e.preventDefault();e.target.blur()}
+  if(e.key==="Escape"&&addingTraveler){addingTraveler=false;render()}});
+app.addEventListener("focusout",e=>{
+  const el=e.target;
+  if(el.dataset&&el.dataset.act==="text"&&!el.value.trim()){const f=findItem(el.closest(".item").dataset.id); if(f){el.value=f.it.text=f.it.text.trim()||"未命名項目"; save()}}
+  if(el.id==="rename"&&!el.value.trim()){cur().name="未命名";save();pendingRender=true}
+});
+app.addEventListener("submit",e=>{
+  e.preventDefault();
+  if(!ready) return;
+  const form=e.target;
+  if(form.dataset.form==="traveler"){
+    const name=(document.getElementById("newTraveler").value||"").trim();
+    if(!name){addingTraveler=false;render();return}
+    const t=newTraveler(name); state.travelers.push(t); ui.traveler=t.id; addingTraveler=false; saveUI(); save(); render(); return;
+  }
+  if(form.dataset.form==="item"){
+    const name=document.getElementById("addName").value.trim(); if(!name) return;
+    const sec=secDef(ui.section);
+    const q=sec.qty?((document.getElementById("addQty")||{}).value||"1"):null;
+    const gsel=document.getElementById("addGroup"); const g=gsel?gsel.value:"";
+    if(g) ui.lastGroup=g;
+    cur().list[ui.section].push(mk(name,q,{},g));
+    save(); render();
+    const n=document.getElementById("addName"); n&&n.focus();
+  }
+});
+
+render();
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}
+if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}
+})();
+</script>
+
+</body>
+</html>
